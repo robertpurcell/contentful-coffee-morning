@@ -39,7 +39,7 @@ export async function getStaticProps({ params }) {
 
 
 export default function RecipeDetails({ recipe }) {
-  const { featuredImage, title, cookingTime, ingredientsList, method } = recipe.fields;
+  const { featuredImage, title, cookingTime, ingredients, ingredientsList, method } = recipe.fields;
 
   return (
     <div>
@@ -58,10 +58,12 @@ export default function RecipeDetails({ recipe }) {
       <div className="info">
         <p>{ cookingTime }</p>
         <h3>Ingredients:</h3>
-
-        {ingredientsList.map(ingredient => (
+        <div>
+          {documentToReactComponents(ingredients)}
+        </div>
+        {/* {ingredientsList.map(ingredient => (
           <span key={ingredient}>{ ingredient }</span>
-        ))}
+        ))} */}
       </div>
 
       <div className="method">
@@ -88,12 +90,6 @@ export default function RecipeDetails({ recipe }) {
         }
         .info p {
           margin: 0;
-        }
-        .info span::after {
-          content: ", ";
-        }
-        .info span:last-child::after {
-          content: ".";
         }
       `}</style>
     </div>

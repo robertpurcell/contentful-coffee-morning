@@ -5,13 +5,10 @@ export default function Layout({ children }) {
     <div className="layout">
       <header>
         <Link href="/">
-          <a>
-            <h1>
-              <span>Macmillan</span>
-              <span>Coffee Morning</span>
-            </h1>
-            {/* <h2>Spread The Joy</h2> */}
-          </a>
+          <h1>
+            <span>Macmillan</span>
+            <span>Coffee Morning</span>
+          </h1>
         </Link>
       </header>
 

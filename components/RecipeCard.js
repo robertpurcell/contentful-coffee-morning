@@ -8,11 +8,12 @@ export default function RecipeCard({ recipe }) {
     <div className="card">
       {thumbnail &&
         <div className="featured">
-            <Image
-                src={'https:' + thumbnail.fields.file.url}
-                width={thumbnail.fields.file.details.image.width}
-                height={thumbnail.fields.file.details.image.height}
-            />
+          <Image
+            src={'https:' + thumbnail.fields.file.url}
+            width={thumbnail.fields.file.details.image.width}
+            height={thumbnail.fields.file.details.image.height}
+            alt={'Image of' + recipe.fields.title}
+          />
         </div>
       }
       <div className="content">
@@ -21,15 +22,11 @@ export default function RecipeCard({ recipe }) {
           <p>{ cookingTime }</p>
         </div>
         <div className="actions">
-          <Link href={'/recipes/' + slug}><a>Read the recipe</a></Link>
+          <Link href={'/recipes/' + slug}>Read the recipe</Link>
         </div>
       </div>
 
-
-      <style jsx>{`
-        .card {
-        //   transform: rotateZ(-1deg);
-        }
+      <style>{`
         .content {
           background: #fff;
           box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
@@ -59,6 +56,10 @@ export default function RecipeCard({ recipe }) {
           background: #5e4f9c;
           padding: 16px 24px;
           text-decoration: none;
+        }
+        img {
+          max-width: 100%;
+          height: auto;
         }
       `}</style>
     </div>

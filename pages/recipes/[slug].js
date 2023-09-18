@@ -45,12 +45,13 @@ export default function RecipeDetails({ recipe }) {
     <div>
       {featuredImage &&
         <div className="banner">
-            <Image
-                src={'https:' + featuredImage.fields.file.url}
-                width={featuredImage.fields.file.details.image.width}
-                height={featuredImage.fields.file.details.image.height}
-            />
-            <h2>{ title }</h2>
+          <Image
+            src={'https:' + featuredImage.fields.file.url}
+            width={featuredImage.fields.file.details.image.width}
+            height={featuredImage.fields.file.details.image.height}
+            alt={'Image of' + recipe.fields.title}
+          />
+          <h2>{ title }</h2>
         </div>
       }
 
@@ -70,7 +71,7 @@ export default function RecipeDetails({ recipe }) {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         h2,h3 {
           text-transform: uppercase;
         }

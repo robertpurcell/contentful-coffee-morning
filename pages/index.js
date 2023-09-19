@@ -1,5 +1,5 @@
 import { createClient } from "contentful"
-import Components from "./components.js";
+import Components from "../components/components.js";
 
 export async function getStaticProps() {
   const client = createClient({

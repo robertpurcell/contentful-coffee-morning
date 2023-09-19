@@ -1,6 +1,6 @@
 import React from "react";
-import RecipeCard from "../components/RecipeCard"
-import HeroPanelWithBlurb from "../components/HeroPanelWithBlurb"
+import RecipeCard from "./RecipeCard"
+import HeroPanelWithBlurb from "./HeroPanelWithBlurb"
 
 const Components = {
     heroPanelWithBlurb: HeroPanelWithBlurb,

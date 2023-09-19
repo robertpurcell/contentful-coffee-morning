@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { createClient } from "contentful"
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import parse from 'html-react-parser'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -29,27 +30,39 @@ export async function getStaticProps({ params }) {
     content_type: 'recipe',
     'fields.slug[match]': params.slug
   })
+  const item = items[0];
 
   return {
     props: {
-      recipe: items[0]
+      recipe: {
+        title: item.fields.title,
+        featuredImage: item.fields.featuredImage && {
+          url: 'https:' + item.fields.featuredImage.fields.file.url,
+          width: item.fields.featuredImage.fields.file.details.image.width,
+          height: item.fields.featuredImage.fields.file.details.image.height,
+          altText: item.fields.featuredImage.fields.title
+        } || null,
+        cookingTime: item.fields.cookingTime || null,
+        ingredients: documentToHtmlString(item.fields.ingredients),
+        method: documentToHtmlString(item.fields.method)
+      }
     }
   }
 }
 
 
 export default function RecipeDetails({ recipe }) {
-  const { featuredImage, title, cookingTime, ingredients, ingredientsList, method } = recipe.fields;
+  const { featuredImage, title, cookingTime, ingredients, method } = recipe;
 
   return (
     <div>
       {featuredImage &&
         <div className="banner">
           <Image
-            src={'https:' + featuredImage.fields.file.url}
-            width={featuredImage.fields.file.details.image.width}
-            height={featuredImage.fields.file.details.image.height}
-            alt={'Image of' + recipe.fields.title}
+            src={featuredImage.url}
+            width={featuredImage.width}
+            height={featuredImage.height}
+            alt={featuredImage.altText}
           />
           <h2>{ title }</h2>
         </div>
@@ -59,17 +72,14 @@ export default function RecipeDetails({ recipe }) {
         <p>{ cookingTime }</p>
         <h3>Ingredients:</h3>
         <div>
-          {documentToReactComponents(ingredients)}
+          {parse(ingredients)}
         </div>
-        {/* {ingredientsList.map(ingredient => (
-          <span key={ingredient}>{ ingredient }</span>
-        ))} */}
       </div>
 
       <div className="method">
         <h3>Method:</h3>
         <div>
-          {documentToReactComponents(method)}
+          {parse(method)}
         </div>
       </div>
 

@@ -1,18 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function RecipeCard({ recipe }) {
-  const { title, slug, cookingTime, thumbnail } = recipe.fields;
+export default function RecipeCard({ linkPath, recipe }) {
+  const { title, slug, cookingTime, thumbnail } = recipe;
 
   return (
     <div className="card">
       {thumbnail &&
         <div className="featured">
           <Image
-            src={'https:' + thumbnail.fields.file.url}
-            width={thumbnail.fields.file.details.image.width}
-            height={thumbnail.fields.file.details.image.height}
-            alt={'Image of' + recipe.fields.title}
+            src={thumbnail.url}
+            width={thumbnail.width}
+            height={thumbnail.height}
+            alt={thumbnail.altText}
           />
         </div>
       }
@@ -22,7 +22,7 @@ export default function RecipeCard({ recipe }) {
           <p>{ cookingTime }</p>
         </div>
         <div className="actions">
-          <Link href={'/recipes/' + slug}>Read the recipe</Link>
+          <Link href={linkPath + slug}>Read the recipe</Link>
         </div>
       </div>
 

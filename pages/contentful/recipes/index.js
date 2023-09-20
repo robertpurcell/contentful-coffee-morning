@@ -24,7 +24,8 @@ export async function getStaticProps() {
           height: item.fields.thumbnail.fields.file.details.image.height,
           altText: item.fields.thumbnail.fields.title
         }
-      }))
+      })),
+      revalidate: 10
     }
   }
 }

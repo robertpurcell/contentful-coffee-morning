@@ -22,7 +22,8 @@ export async function getStaticProps() {
           height: item.thumbnail.media.umbracoHeight,
           altText: item.thumbnail.media.name
         }
-      }))
+      })),
+      revalidate: 10
     }
   }
 }

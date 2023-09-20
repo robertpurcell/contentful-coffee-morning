@@ -45,7 +45,8 @@ export async function getStaticProps({ params }) {
         cookingTime: item.fields.cookingTime || null,
         ingredients: documentToHtmlString(item.fields.ingredients),
         method: documentToHtmlString(item.fields.method)
-      }
+      },
+      revalidate: 10
     }
   }
 }

@@ -38,7 +38,8 @@ export async function getStaticProps({ params }) {
         cookingTime: item.cookingTime || null,
         ingredients: item.ingredients,
         method: item.method
-      }
+      },
+      revalidate: 10
     }
   }
 }

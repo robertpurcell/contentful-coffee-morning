@@ -2,6 +2,7 @@ import Image from "next/image";
 import { createClient } from "contentful"
 import parse from 'html-react-parser'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import Skeleton from "../../../components/Skeleton";
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -21,7 +22,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false
+    fallback: true
   }
 }
 
@@ -30,6 +31,13 @@ export async function getStaticProps({ params }) {
     content_type: 'recipe',
     'fields.slug[match]': params.slug
   })
+
+  if (!items.length) {
+    return {
+      notFound: true
+    }
+  }
+
   const item = items[0];
 
   return {
@@ -53,6 +61,8 @@ export async function getStaticProps({ params }) {
 
 
 export default function RecipeDetails({ recipe }) {
+  if (!recipe) return <Skeleton />
+
   const { featuredImage, title, cookingTime, ingredients, method } = recipe;
 
   return (

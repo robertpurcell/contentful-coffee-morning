@@ -1,6 +1,7 @@
 import { Client } from "@umbraco/headless-client"
 import Image from "next/image";
 import parse from 'html-react-parser'
+import Skeleton from "../../../components/Skeleton";
 
 const client = new Client({
   projectAlias: process.env.UMBRACO_PROJECT_ALIAS,
@@ -19,12 +20,19 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false
+    fallback: true
   }
 }
 
 export async function getStaticProps({ params }) {
   const item = await client.delivery.content.byUrl('/home/recipes/' + params.slug)
+
+  if (!item) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       recipe: {
@@ -51,6 +59,8 @@ export function getSlug(url) {
 }
 
 export default function RecipeDetails({ recipe }) {
+  if (!recipe) return <Skeleton />
+
   const { featuredImage, title, cookingTime, ingredients, method } = recipe;
 
   return (

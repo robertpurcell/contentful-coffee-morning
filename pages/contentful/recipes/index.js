@@ -1,6 +1,6 @@
 import { createClient } from "contentful"
 import RecipeCard from "../../../components/RecipeCard"
-import { useRouter } from 'next/router'
+import SearchForm from "../../../components/SearchForm";
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -62,64 +62,12 @@ async function getCategories() {
 }
 
 export default function Recipes(props) {
-  const router = useRouter()
-
-  const {
-    searchQuery = '',
-    category = ''
-  } = router.query;
-
-  const filterSearch = ({
-    searchQuery,
-    category,
-  }) => {
-    const { query } = router;
-    query.searchQuery = searchQuery;
-    query.category = category;
-  
-    router.push({
-      pathname: router.pathname,
-      query: query
-    });
-  }
-  
-  const categoryHandler = (e) => {
-    filterSearch({ category: e.target.value })
-  };
-  
-  const queryHandler = (e) => {
-    filterSearch({ searchQuery: e.target.value })
-  };
-
   const { categories, recipes } = props;
 
   return (
     <div className="wrapper">
       <div className="filters">
-        <label htmlFor="search">Search</label>
-        <input
-          onChange={queryHandler}
-          name="search"
-          type="text"
-          placeholder="Ingredient or keyword"
-          autoComplete="off"
-          value={searchQuery}
-        />
-        <label htmlFor="category">Category</label>
-        <select
-          name="category"
-          value={category}
-          onChange={categoryHandler}
-        >
-          <option value="">All</option>
-          {categories &&
-            categories.map(c => (
-              <option key={c.value} value={c.value}>
-                {c.name}
-              </option>
-            ))
-          }
-        </select>
+        <SearchForm categories={categories} />
       </div>
       <div className="recipe-list">
         {recipes.map(recipe => (
@@ -127,15 +75,6 @@ export default function Recipes(props) {
         ))}
       </div>
       <style>{`
-          input[type=text], select {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-          }
           .wrapper {
             display: grid;
             grid-gap: 20px;

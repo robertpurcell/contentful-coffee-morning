@@ -65,17 +65,17 @@ export default function RecipeDetails({ recipe }) {
 
   return (
     <div>
-      {featuredImage &&
-        <div className="banner">
+      <div className="banner">
+        {featuredImage &&
           <Image
             src={featuredImage.url}
             width={featuredImage.width}
             height={featuredImage.height}
             alt={featuredImage.altText}
           />
-          <h2>{ title }</h2>
-        </div>
-      }
+        }
+        <h2>{ title }</h2>
+      </div>
 
       <div className="info">
         <p>{ cookingTime }</p>

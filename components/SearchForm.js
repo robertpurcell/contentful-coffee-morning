@@ -23,11 +23,11 @@ export default function SearchForm({ categories }) {
   }
   
   const categoryHandler = (e) => {
-    filterSearch({ category: e.target.value })
+    filterSearch({ searchQuery: searchQuery, category: e.target.value })
   };
   
   const queryHandler = (e) => {
-    filterSearch({ searchQuery: e.target.value })
+    filterSearch({ searchQuery: e.target.value, category: category })
   };
 
   return (

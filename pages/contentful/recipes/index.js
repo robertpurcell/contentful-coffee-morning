@@ -70,9 +70,9 @@ export default function Recipes(props) {
         <SearchForm categories={categories} />
       </div>
       <div className="recipe-list">
-        {recipes.map(recipe => (
+        {recipes.length > 0 ? recipes.map(recipe => (
           <RecipeCard key={recipe.id} recipe={recipe} linkPath='/contentful/recipes/' />
-        ))}
+        )) : <p>No results found</p>}
       </div>
       <style>{`
           .wrapper {

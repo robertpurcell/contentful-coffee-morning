@@ -13,10 +13,12 @@ export async function getServerSideProps({ query }) {
 
   var items;
   if (searchQuery) {
+    // If we have a search term we need to search on all content first and then filter by content type and category.
     items = (await client.delivery.content.search(searchQuery))
       .items
       .filter(item => item.contentTypeAlias == 'recipePage' && (!category || item.categories.includes(category)));
   } else if (category) {
+    // If we have a category we can use the filter function to filter the items.
     const contentFilter = {
       "contentTypeAlias": "recipePage",
       "properties": [
@@ -28,6 +30,7 @@ export async function getServerSideProps({ query }) {
     };
     items = (await client.delivery.content.filter(contentFilter)).items;
   } else {
+    // If we have neither then we just return all recipe pages.
     items = (await client.delivery.content.byContentType("recipePage")).items;
   }
 
